@@ -1,0 +1,60 @@
+﻿<views:BasePage
+    x:Class="FarmaciasTurno.View.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:FarmaciasTurno.Behaviors"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:viewmodels="clr-namespace:FarmaciasTurno.ViewModel"
+    xmlns:views="clr-namespace:FarmaciasTurno.View"
+    Title="Farmacias en Turno">
+    <views:BasePage.BindingContext>
+        <viewmodels:MainPageViewModel />
+    </views:BasePage.BindingContext>
+    <StackLayout>
+        <Button Command="{Binding BuscarFarmacias}" Text="Buscar Farmacias" />
+        <Label
+            Margin="0,6,0,0"
+            FontAttributes="Bold"
+            Text="Ubicación actual:" />
+        <Label Text="{Binding CurrentLocation}" />
+        <Label Text="Exactitud:" />
+        <Picker
+            HorizontalOptions="Fill"
+            IsEnabled="{Binding IsNotBusy}"
+            ItemsSource="{Binding Accuracies}"
+            SelectedIndex="{Binding Accuracy, Mode=TwoWay}" />
+        <maps:Map
+            x:Name="MapView"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <maps:Map.Behaviors>
+                <behaviors:MapBehavior ItemsSource="{Binding Items}" />
+            </maps:Map.Behaviors>
+        </maps:Map>
+        <StackLayout
+            Padding="20"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Horizontal"
+            Spacing="15"
+            VerticalOptions="End">
+            <Button
+                Clicked="Street_OnClicked"
+                HeightRequest="50"
+                HorizontalOptions="EndAndExpand"
+                Text="Street"
+                VerticalOptions="Center" />
+            <Button
+                Clicked="Hybrid_OnClicked"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                Text="Hybrid"
+                VerticalOptions="Center" />
+            <Button
+                Clicked="Satellite_OnClicked"
+                HeightRequest="50"
+                HorizontalOptions="StartAndExpand"
+                Text="Satellite"
+                VerticalOptions="Center" />
+        </StackLayout>
+    </StackLayout>
+</views:BasePage>
